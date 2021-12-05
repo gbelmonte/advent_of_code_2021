@@ -24,21 +24,14 @@ fn part_1_solution() {
     let result = input.iter_mut()
         .filter(|((x1, y1), (x2, y2))| *x1 == *x2 || *y1 == *y2)
         .fold(HashMap::new(), |mut map, ((x1, y1),(x2, y2))| {
-            if x1 != x2 {
-                let mut modifier = if x1 < x2 {1} else {-1};
-                while x1 != x2 {
-                    *map.entry((*x1, *y1)).or_insert(0) += 1;
-                    *x1 += modifier;
-                }
+            let mut x_modifier = if x1 == x2 {0} else {if x1 < x2 {1} else {-1}};
+            let mut y_modifier = if y1 == y2 {0} else {if y1 < y2 {1} else {-1}};
+            while x1 != x2 || y1 != y2 {
                 *map.entry((*x1, *y1)).or_insert(0) += 1;
-            } else {
-                let mut modifier = if y1 < y2 {1} else {-1};
-                while y1 != y2 {
-                    *map.entry((*x1, *y1)).or_insert(0) += 1;
-                    *y1 += modifier;
-                }
-                *map.entry((*x1, *y1)).or_insert(0) += 1;
+                *x1 += x_modifier;
+                *y1 += y_modifier;
             }
+            *map.entry((*x1, *y1)).or_insert(0) += 1;
             map
         });
     let count = result.into_iter().filter(|((_,_), x)| *x > 1).count();    
@@ -63,31 +56,14 @@ fn part_2_solution() {
 
     let result = input.iter_mut()
         .fold(HashMap::new(), |mut map, ((x1, y1),(x2, y2))| {
-            if x1 != x2 && y1 != y2 {
-                let mut x_modifier = if x1 < x2 {1} else {-1};
-                let mut y_modifier = if y1 < y2 {1} else {-1};
-                while x1 != x2 && y1 != y2 {
-                    *map.entry((*x1, *y1)).or_insert(0) += 1;
-                    *x1 += x_modifier;
-                    *y1 += y_modifier;
-                }
+            let mut x_modifier = if x1 == x2 {0} else {if x1 < x2 {1} else {-1}};
+            let mut y_modifier = if y1 == y2 {0} else {if y1 < y2 {1} else {-1}};
+            while x1 != x2 || y1 != y2 {
                 *map.entry((*x1, *y1)).or_insert(0) += 1;
+                *x1 += x_modifier;
+                *y1 += y_modifier;
             }
-            else if x1 != x2 {
-                let mut modifier = if x1 < x2 {1} else {-1};
-                while x1 != x2 {
-                    *map.entry((*x1, *y1)).or_insert(0) += 1;
-                    *x1 += modifier;
-                }
-                *map.entry((*x1, *y1)).or_insert(0) += 1;
-            } else if y1 != y2 {
-                let mut modifier = if y1 < y2 {1} else {-1};
-                while y1 != y2 {
-                    *map.entry((*x1, *y1)).or_insert(0) += 1;
-                    *y1 += modifier;
-                }
-                *map.entry((*x1, *y1)).or_insert(0) += 1;
-            }
+            *map.entry((*x1, *y1)).or_insert(0) += 1;
             map
         });
     let count = result.into_iter().filter(|((_,_), x)| *x > 1).count();    
