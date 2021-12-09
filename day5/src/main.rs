@@ -24,8 +24,8 @@ fn part_1_solution() {
     let result = input.iter_mut()
         .filter(|((x1, y1), (x2, y2))| *x1 == *x2 || *y1 == *y2)
         .fold(HashMap::new(), |mut map, ((x1, y1),(x2, y2))| {
-            let mut x_modifier = if x1 == x2 {0} else {if x1 < x2 {1} else {-1}};
-            let mut y_modifier = if y1 == y2 {0} else {if y1 < y2 {1} else {-1}};
+            let x_modifier = if x1 == x2 {0} else {if x1 < x2 {1} else {-1}};
+            let y_modifier = if y1 == y2 {0} else {if y1 < y2 {1} else {-1}};
             while x1 != x2 || y1 != y2 {
                 *map.entry((*x1, *y1)).or_insert(0) += 1;
                 *x1 += x_modifier;
@@ -56,8 +56,8 @@ fn part_2_solution() {
 
     let result = input.iter_mut()
         .fold(HashMap::new(), |mut map, ((x1, y1),(x2, y2))| {
-            let mut x_modifier = if x1 == x2 {0} else {if x1 < x2 {1} else {-1}};
-            let mut y_modifier = if y1 == y2 {0} else {if y1 < y2 {1} else {-1}};
+            let x_modifier = if x1 == x2 {0} else {if x1 < x2 {1} else {-1}};
+            let y_modifier = if y1 == y2 {0} else {if y1 < y2 {1} else {-1}};
             while x1 != x2 || y1 != y2 {
                 *map.entry((*x1, *y1)).or_insert(0) += 1;
                 *x1 += x_modifier;
